@@ -1,0 +1,73 @@
+{
+  "name": "pjblog-theme-sentice",
+  "version": "1.0.0",
+  "description": "PJBlog主题之 Sentice 主题",
+  "main": "index.js",
+  "repository": "https://github.com/pjblog/pjblog-theme-sentice",
+  "homepage": "https://npmjs.com/pjblog-theme-sentice",
+  "files": [
+    "dist/ssr",
+    "index.js",
+    "pjblog.configs.json"
+  ],
+  "scripts": {
+    "dev": "npm run dev:ssr",
+    "dev:ssr": "SSR=true vite --host",
+    "build": "rm -rf dist && npm run build:ssr",
+    "build:client": "KIND=client vite build",
+    "build:server": "KIND=server vite build",
+    "build:ssr": "npm run build:client && npm run build:server"
+  },
+  "dependencies": {
+    "@codemirror/lang-markdown": "^6.0.5",
+    "@codemirror/language-data": "^6.1.0",
+    "@codixjs/codix": "^1.0.14",
+    "@codixjs/fetch": "^1.0.0",
+    "@codixjs/server": "^1.0.0",
+    "@codixjs/vite": "^1.0.41",
+    "@pjblog/hooks": "^1.1.8",
+    "@uiw/react-codemirror": "^4.19.4",
+    "antd": "^5.0.7",
+    "dayjs": "^1.11.7",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-decorators": "^7.18.6",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@typeservice/exception": "^1.0.1",
+    "@vitejs/plugin-react": "^1.3.0",
+    "less": "^4.1.3",
+    "typescript": "^4.8.4",
+    "vite": "^3.2.5"
+  },
+  "config": {
+    "entries": {
+      "spa": "./src/entries/spa.tsx",
+      "client": "./src/entries/client.tsx",
+      "server": "./src/entries/server.tsx"
+    },
+    "skips": [
+      "/@react-refresh",
+      "/@id/vite/modulepreload-polyfill",
+      "/@vite/client"
+    ],
+    "rewrites": {
+      "/index.html": "/"
+    }
+  },
+  "manifest": {},
+  "pjblog": {
+    "type": "theme",
+    "icon": "https://static.wbolt.com/wp-content/uploads/2020/08/Triple-Cover-768x512.jpg",
+    "extends": {},
+    "previews": [
+      "https://static.wbolt.com/wp-content/uploads/2020/08/Triple-Design2.jpg",
+      "https://static.wbolt.com/wp-content/uploads/2020/08/triple-download-setting-1536x992.png",
+      "https://static.wbolt.com/wp-content/uploads/2020/08/triple-theme-media-box-1536x1126.png"
+    ],
+    "assets": "dist/ssr/client"
+  }
+}

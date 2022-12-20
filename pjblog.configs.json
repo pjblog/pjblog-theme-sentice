@@ -1,0 +1,43 @@
+[
+  {
+    "name": "logo",
+    "label": "网站Logo地址",
+    "type": "text",
+    "defaultValue": "https://www.wpdaxue.com/img/2022/09/wpdaxue-logo-10.png",
+    "text": {
+      "placeholder": "请输入Logo网络地址",
+      "style": {
+        "width": 350
+      }
+    }
+  },
+  {
+    "name": "banner",
+    "label": "网站首页banner图片地址",
+    "type": "text",
+    "defaultValue": "https://www.wpdaxue.com/img/2013/08/calltobg.jpg",
+    "text": {
+      "placeholder": "请输入网站首页banner图片网络地址",
+      "style": {
+        "width": 350
+      }
+    }
+  },
+  {
+    "name": "bannerColor",
+    "label": "网站首页banner上文字颜色",
+    "type": "color",
+    "defaultValue": "#fff",
+    "color": {}
+  },
+  {
+    "name": "showCommentsWhenNotLogined",
+    "label": "未登录是否显示评论",
+    "type": "switch",
+    "defaultValue": true,
+    "switch": {
+      "checkedChildren": "显示",
+      "unCheckedChildren": "禁用"
+    }
+  }
+]

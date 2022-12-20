@@ -1,0 +1,1 @@
+export type IOpenType = 'login' | 'register' | 'profile' | 'password';

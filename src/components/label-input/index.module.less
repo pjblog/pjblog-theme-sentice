@@ -1,0 +1,31 @@
+.container{
+  position: relative;
+  display: block;
+  margin-top: 20px;
+  .dot {
+    position: absolute;
+    top: -8px;
+    font-size: 15px;
+    color: #b2bac2;
+    display: block;
+    line-height: 1;
+    padding: 0 7px;
+    background-color: #fff;
+    left: 10px;
+  }
+  input {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 48px;
+  }
+  input:hover + span.dot, input:focus + span.dot{
+    color: #ff3657;
+  }
+}
+
+.button{
+  padding: 11px 15px!important;
+  height: auto!important;
+  font-size: 14px!important;
+  margin-top: 10px;
+}

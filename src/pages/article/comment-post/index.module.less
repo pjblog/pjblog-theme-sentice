@@ -1,0 +1,67 @@
+.container{
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  .topbar{
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.02);
+    padding: 8px 8px 0 8px;
+    :global{
+      .ant-tabs-nav{
+        margin-bottom: 0;
+        &::before{
+          border:0;
+        }
+        .ant-tabs-tab{
+          border: 0;
+          background-color: transparent;
+          &.ant-tabs-tab-active{
+            background-color: #fff;
+          }
+        }
+      }
+    }
+  }
+  .body{
+    background-color: #fff;
+    width: 100%;
+    padding: 8px;
+    .html{
+      padding: 8px 16px;
+      box-sizing: border-box;
+      min-height: 100px;
+    }
+    .editor{
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      transform: translate3d(0,0,0);
+    }
+    .submit{
+      margin-top: 8px;
+      border-top: 1px solid #f5f5f5;
+      padding-top: 8px;
+      padding: 8px 8px 0 8px;
+    }
+  }
+  .reply{
+    background-color: #fff;
+    padding: 8px 16px;
+    width: 100%;
+    border-bottom: 1px solid #f5f5f5;
+    .reply_title{
+      color: #999;
+      font-size: 12px;
+      margin-bottom: 12px;
+      strong{
+        font-weight: normal;
+        color: #ff3657;
+      }
+    }
+    .reply_content{
+      padding: 0 12px;
+      box-sizing: border-box;
+      border-left: 3px solid #d9d9d9;
+    }
+  }
+}
