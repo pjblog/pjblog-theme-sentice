@@ -26,7 +26,7 @@ const tabs = [
 ]
 
 // @ts-ignore
-const Coder: CodeMirror = CodeMirror?.default;
+const Coder: CodeMirror = !!CodeMirror?.default ? CodeMirror.default : CodeMirror;
 
 export function CommentPost(props: PropsWithoutRef<{
   aid: number,
