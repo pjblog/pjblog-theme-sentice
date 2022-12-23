@@ -25,6 +25,9 @@ const tabs = [
   }
 ]
 
+// @ts-ignore
+const Coder: CodeMirror = CodeMirror?.default;
+
 export function CommentPost(props: PropsWithoutRef<{
   aid: number,
   addComment: (v: ICommentState) => void,
@@ -100,7 +103,7 @@ export function CommentPost(props: PropsWithoutRef<{
       </div>}
       <div className={styles.body}>
         {type === 'write' && <div className={styles.editor}>
-          <CodeMirror 
+          <Coder 
             minHeight="100px"
             value={value} 
             extensions={[markdown({ base: markdownLanguage, codeLanguages: languages })]} 
