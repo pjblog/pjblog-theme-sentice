@@ -7,7 +7,7 @@ import { useRequestQuery } from '@codixjs/codix';
 import { Article } from './article';
 import { Col, Pagination, Row, Typography } from 'antd';
 import { usePath } from '../../hooks';
-import { HotArticles, CloudTags, Comments } from '../../sidebars';
+import { HotArticles, CloudTags, Comments, HotPrints } from '../../sidebars';
 import { Suspense } from 'react';
 import { IArticle } from './types';
 
@@ -46,6 +46,11 @@ export default function HomePage() {
         <Col span={24}>
           <SideBar title="热门文章" padable>
             <Suspense fallback={<Loading />}><HotArticles /></Suspense>
+          </SideBar>
+        </Col>
+        <Col span={24}>
+          <SideBar title="热门转载" padable>
+            <Suspense fallback={<Loading />}><HotPrints /></Suspense>
           </SideBar>
         </Col>
         <Col span={24}>

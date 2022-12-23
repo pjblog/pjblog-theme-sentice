@@ -4,18 +4,26 @@ import classnames from 'classnames';
 import { Flex, Loading, SideBar } from "../../components";
 import { useCategorySetter } from '../../layout';
 import { useRequestParam, useRequestQuery } from '@codixjs/codix';
-import { createArticlesQuery, useArticle, transformHeadings, IArticleHeaded, useMyInfo, useThemeConfigs } from '@pjblog/hooks';
-import { Typography, Row, Col, Divider, Tag, Space, Avatar, Anchor, theme } from 'antd';
-import { Fragment, PropsWithoutRef, Suspense, useEffect, useMemo } from 'react';
+import { createArticlesQuery, useArticle, transformHeadings, IArticleHeaded, useMyInfo, useThemeConfigs, IArticleWithHtml, request } from '@pjblog/hooks';
+import { Typography, Row, Col, Divider, Tag, Space, Avatar, Anchor, Input, Button, message } from 'antd';
+import { Fragment, PropsWithoutRef, Suspense, useCallback, useEffect, useMemo, useState } from 'react';
 import { usePath } from '../../hooks';
-import { CloudTags, HotArticles } from '../../sidebars';
 import { Relatives } from './relatives';
 import { Comments } from './comments';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { numberic, scrollTo, ThemeConfigs } from '../../utils';
-import { Comments as LatestComments } from '../../sidebars';
+import { Comments as LatestComments, HotPrints, CloudTags, HotArticles } from '../../sidebars';
+import { useAsyncCallback } from '@codixjs/fetch';
 
 const { Link } = Anchor;
+
+interface IArticle extends IArticleWithHtml {
+  prints: {
+    level: number,
+    total: number,
+    token: string,
+  }
+}
 
 export default function Article() {
   const me = useMyInfo();
@@ -24,7 +32,7 @@ export default function Article() {
   const ARTICLE = usePath('ARTICLE');
   const page = useRequestQuery('page', numberic(1)) as number;
   const code = useRequestParam<string>('code');
-  const { data } = useArticle(code);
+  const { data } = useArticle<IArticle>(code);
   const setCategory = useCategorySetter();
   const headings = useMemo(() => transformHeadings(data.headings), [data.headings])
   useEffect(() => {
@@ -42,7 +50,7 @@ export default function Article() {
         <Col span={24}>
           <div className={classnames('content', 'box', styles.content)}>
             <Typography.Text className={styles.date}>
-              <Tag className={styles.category} color="#ff3657" onClick={() => HOME.redirect({}, createArticlesQuery({ category: data.category.id }))}>{data.category.name}</Tag>
+              <Tag className={styles.category} color="#1890ff" onClick={() => HOME.redirect({}, createArticlesQuery({ category: data.category.id }))}>{data.category.name}</Tag>
               发布于 {dayjs(data.ctime).format('YYYY-MM-DD HH:mm:ss')}
               <Divider type="vertical" />
               修改于 {dayjs(data.mtime).format('YYYY-MM-DD HH:mm:ss')}
@@ -62,7 +70,7 @@ export default function Article() {
               {
                 data.original
                   ? <span>原创</span>
-                  : <Typography.Link ellipsis href={data.from} target="_blank">{data.from}</Typography.Link>
+                  : <Flex valign="middle">转载自：<Typography.Link ellipsis href={data.from} target="_blank">{data.from}</Typography.Link></Flex>
               }
             </Flex>
             <div className={classnames('markdown', styles.html)} dangerouslySetInnerHTML={{ __html: data.html }}></div>
@@ -108,12 +116,23 @@ export default function Article() {
     </div>
     <div className="sidebar">
       <Row gutter={[0, 16]}>
+        {data.prints.level >= 0 && <Reprints 
+          level={data.prints.level} 
+          token={data.prints.token}
+          total={data.prints.total} 
+          code={data.code}
+        />}
         {
           !headings.length
             ? <Fragment>
               <Col span={24}>
                 <SideBar title="热门文章" padable>
                   <Suspense fallback={<Loading />}><HotArticles /></Suspense>
+                </SideBar>
+              </Col>
+              <Col span={24}>
+                <SideBar title="热门转载" padable>
+                  <Suspense fallback={<Loading />}><HotPrints /></Suspense>
                 </SideBar>
               </Col>
               <Col span={24}>
@@ -149,4 +168,44 @@ export function Links(props: PropsWithoutRef<{ dataSource: IArticleHeaded[] }>) 
       })
     }
   </Fragment>
+}
+
+function Reprints(props: PropsWithoutRef<{ 
+  level: number,
+  token: string,
+  total: number,
+  code: string,
+}>) {
+  const [value, setValue] = useState<string>(null);
+  const { execute, loading } = useAsyncCallback(async (value: string) => {
+    const res = await request.put<{ level: number }>('/plugin/pjblog-plugin-reprint-article/provider/' + props.code, {
+      base64: value,
+    })
+    return res.data.level;
+  })
+  const submit = useCallback(() => {
+    if (!value) return;
+    execute(value)
+      .then((level) => {
+        switch (level) {
+          case 0: return message.success('申请已提交，等待博主通过！');
+          case 1: return message.success('博文已同步至您的博客，请返回您的博客查看！');
+          default: return message.warning('非法操作');
+        }
+      })
+      .catch(e => message.error(e.message))
+      .finally(() => setValue(null));
+  }, [value])
+  return <Col span={24}>
+    <SideBar title="转载信息" padable>
+      <Typography.Paragraph>本文共被转载了 <strong>{props.total}</strong> 次</Typography.Paragraph>
+      <div className={styles.print_code}>
+        <Typography.Text copyable={{ text: props.token }}>{props.token}</Typography.Text>
+      </div>
+      <Space direction="vertical" style={{ width: '100%' }}>
+        <Input.TextArea value={value} onChange={e => setValue(e.target.value)} rows={3} placeholder="请输入转载码..."></Input.TextArea>
+        <Button type="primary" block size="large" onClick={submit} loading={loading} disabled={!value}>申请转载</Button>
+      </Space>
+    </SideBar>
+  </Col>
 }

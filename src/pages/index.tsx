@@ -24,8 +24,9 @@ export default function(app: Application<HistoryMode>) {
   app.use(ConfigProvider, {
     theme: {
       token: {
-        colorPrimary: '#ff3657',
-        colorInfo: '#ff3657'
+        colorPrimary: '#1890ff',
+        colorInfo: '#1890ff',
+        fontSize: 13
       }
     }
   })

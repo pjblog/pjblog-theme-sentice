@@ -1,6 +1,6 @@
 {
   "name": "pjblog-theme-sentice",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "PJBlog主题之 Sentice 主题",
   "main": "index.js",
   "repository": "https://github.com/pjblog/pjblog-theme-sentice",
@@ -66,7 +66,8 @@
       "pjblog-plugin-tags": "^1.1.1",
       "pjblog-plugin-hot-articles": "^1.0.0",
       "pjblog-plugin-relative-articles": "^1.0.1",
-      "pjblog-plugin-comment": "^1.0.4"
+      "pjblog-plugin-comment": "^1.0.4",
+      "pjblog-plugin-reprint-article": "^1.0.0"
     },
     "previews": [
       "https://static.wbolt.com/wp-content/uploads/2020/08/Triple-Design2.jpg",

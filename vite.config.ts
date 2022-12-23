@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 const pkg = require('./package.json');
 const port = 8866;
 const themeConfigs = {
-  logo: 'https://www.wpdaxue.com/img/2022/09/wpdaxue-logo-10.png',
+  logo: 'https://s1.ax1x.com/2022/12/23/zjWxKJ.png',
   banner: 'https://www.wpdaxue.com/img/2013/08/calltobg.jpg',
   bannerColor: '#fff',
   showCommentsWhenNotLogined: false,
