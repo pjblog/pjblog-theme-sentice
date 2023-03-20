@@ -25,7 +25,7 @@ export function Layout(props: PropsWithChildren<{}>) {
           Powered by PJBLOG
         </div>
         <div className={styles.item}>
-          {configs.icp}
+          <Typography.Link href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">{configs.icp}</Typography.Link>
           <Divider type="vertical" />
           {configs.copyright}
         </div>
